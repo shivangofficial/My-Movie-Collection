@@ -488,3 +488,332 @@
 </script>
 </body>
 </html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Movie Collection — Shareable</title>
+
+  <!-- Google Fonts for Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#14181c; --card:#1f262d; --muted:#99aabb; --accent:#00e054; --accent-hover:#00b042;
+      --danger: #ff5f5f; --glass: rgba(255,255,255,0.08); --border: rgba(255,255,255,0.1); --radius:6px;
+    }
+    *{box-sizing:border-box}
+    body{ margin:0; font-family:'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color:#fff; -webkit-font-smoothing:antialiased; padding:0; }
+    .container{ max-width:1200px; margin:0 auto; padding:40px 24px; }
+    header{ display:flex; flex-wrap:wrap; gap:20px; align-items:flex-end; justify-content:space-between; margin-bottom:32px; border-bottom:1px solid var(--border); padding-bottom:20px; }
+    .title h1{ margin:0; font-size:24px; font-weight:700; } .title p{ margin:4px 0 0 0; color:var(--muted); font-size:14px; }
+    .controls{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .search{ background:#2c3440; border:1px solid transparent; padding:10px 14px; border-radius:20px; color:#fff; width:220px; font-size:14px; outline:none; transition:all .2s; }
+    .btn{ background:#456; border:none; color:#fff; padding:10px 16px; border-radius:4px; cursor:pointer; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; display:inline-flex; align-items:center; gap:6px; }
+    .btn.primary{ background:var(--accent); color:#14181c; } .btn.danger{ background:transparent; color:var(--danger); border:1px solid rgba(255,95,95,0.3); }
+    .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:24px 16px; align-items:start; }
+    .card{ position:relative; border-radius:var(--radius); transition:transform .2s; cursor:pointer; }
+    .card:hover{ transform:translateY(-4px); }
+    .poster-frame{ position:relative; border-radius:var(--radius); overflow:hidden; aspect-ratio:2/3; box-shadow:0 2px 8px rgba(0,0,0,.5); border:1px solid rgba(255,255,255,0.1); background:#232a32; }
+    .poster{ width:100%; height:100%; object-fit:cover; display:block; }
+    .meta{ padding-top:8px; } .movie-title{ font-weight:600; font-size:15px; color:#fff; } .year{ color:var(--muted); font-size:13px; margin-top:2px; }
+    .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.8); display:none; place-items:center; z-index:100; padding:20px; } .modal-overlay.active{ display:grid; }
+    .modal{ background:#232a32; padding:24px; border-radius:8px; width:100%; max-width:540px; max-height:90vh; overflow-y:auto; border:1px solid var(--border); color:#d8e0e8; }
+    .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; } .form-full{ grid-column:1 / -1; }
+    .form-group label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; text-transform:uppercase; font-weight:600; }
+    .form-group input, .form-group select{ width:100%; background:#14181c; border:1px solid #456; padding:10px; color:white; border-radius:4px; font-family:inherit; }
+    .empty-state{ grid-column:1 / -1; text-align:center; padding:60px; color:var(--muted); }
+    @media (max-width:768px){ header{ flex-direction:column; } .grid{ grid-template-columns:repeat(3,1fr); } .form-grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title">
+        <h1>CineLog</h1>
+        <p id="collectionCount">A personal collection</p>
+      </div>
+
+      <div class="controls">
+        <input id="searchInput" class="search" placeholder="Filter by name, genre..." />
+        <button class="btn ai-roast" onclick="generateRoast()">✨ Roast My Taste</button>
+        <button class="btn ai-suggest" onclick="generateRecommendation()">✨ Suggest a Gem</button>
+
+        <!-- Export / Import -->
+        <button class="btn" onclick="exportData()">⬇️ Export</button>
+        <label class="btn" style="cursor:pointer;">
+          ⬆️ Import<input id="importFile" type="file" accept="application/json" style="display:none" onchange="importData(event)">
+        </label>
+
+        <!-- Generate shareable single-file HTML -->
+        <button id="shareBtn" class="btn primary" onclick="generateShareableFile()">📤 Generate Shareable File</button>
+
+        <button class="btn primary" onclick="openAddModal()">+ Log Film</button>
+      </div>
+    </header>
+
+    <main id="grid" class="grid"></main>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="entryModal" class="modal-overlay"><div class="modal">
+    <h2 id="modalTitle">Log a Film</h2>
+    <form id="entryForm" onsubmit="handleSave(event)">
+      <input type="hidden" name="id">
+      <div class="form-grid">
+        <div class="form-group form-full"><label>Film Title</label><input type="text" name="title" required></div>
+        <div class="form-group"><label>Director</label><input type="text" name="director"></div>
+        <div class="form-group"><label>Writer</label><input type="text" name="writer"></div>
+        <div class="form-group"><label>Release Date</label><input type="date" name="releaseDate"></div>
+        <div class="form-group"><label>Genre</label><input type="text" name="genre"></div>
+        <div class="form-group form-full"><label>Poster Image URL</label><input type="url" name="posterUrl"></div>
+        <div class="form-group form-full"><label>Rating</label>
+          <select name="rating"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:16px;border-top:1px solid var(--border);padding-top:12px;">
+        <button type="button" id="deleteBtn" class="btn danger" onclick="handleDelete()" style="display:none">Delete</button>
+        <div style="display:flex;gap:8px;">
+          <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn primary">Save</button>
+        </div>
+      </div>
+    </form>
+  </div></div>
+
+  <!-- AI Modal -->
+  <div id="aiModal" class="modal-overlay"><div class="modal"><h2 id="aiTitle">Gemini</h2><div id="aiContent">Thinking...</div><div style="display:flex;justify-content:flex-end;margin-top:16px;"><button class="btn" onclick="closeAiModal()">Close</button></div></div></div>
+
+<script>
+/*
+  Behavior:
+  - Use app normally.
+  - Click "Generate Shareable File" to download an HTML file that contains your current movies embedded.
+  - Share that downloaded file. The recipient will see your list as-is.
+*/
+
+/* ---------- initialMovies: used when localStorage empty ---------- */
+/* When generating a shareable file, this variable will be replaced inside the downloaded HTML,
+   so the generated file contains the current movies. */
+const initialMovies = [
+  { id: 1, title: "Blade Runner 2049", year: 2017, releaseDate: "2017-10-06", director: "Denis Villeneuve", writer: "Hampton Fancher", genre: "Sci-Fi", rating: 5, color: "#f97316", posterUrl: "" },
+  { id: 2, title: "Dune: Part Two", year: 2024, releaseDate: "2024-03-01", director: "Denis Villeneuve", writer: "Denis Villeneuve", genre: "Sci-Fi", rating: 5, color: "#d97706", posterUrl: "" },
+  { id: 3, title: "Interstellar", year: 2014, releaseDate: "2014-11-07", director: "Christopher Nolan", writer: "Jonathan Nolan", genre: "Sci-Fi", rating: 5, color: "#0ea5e9", posterUrl: "" }
+];
+/* ---------------------------------------------------------------- */
+
+const STORAGE_KEY = 'cineLog_movies_v1';
+let movies = [];
+try {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) movies = JSON.parse(stored);
+  else movies = [...initialMovies];
+} catch (e) { console.error('Storage read error', e); movies = [...initialMovies]; }
+
+const grid = document.getElementById('grid');
+const searchInput = document.getElementById('searchInput');
+const modal = document.getElementById('entryModal');
+const entryForm = document.getElementById('entryForm');
+const modalTitle = document.getElementById('modalTitle');
+const deleteBtn = document.getElementById('deleteBtn');
+const collectionCount = document.getElementById('collectionCount');
+const aiModal = document.getElementById('aiModal');
+const aiContent = document.getElementById('aiContent');
+const aiTitle = document.getElementById('aiTitle');
+
+let currentEditId = null;
+
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(movies));
+    updateCollectionText();
+  } catch (e) { console.error('Could not save', e); }
+}
+function updateCollectionText() {
+  collectionCount.textContent = `A personal collection of ${movies.length} films`;
+}
+
+function renderMovies(){
+  grid.innerHTML = '';
+  const term = (searchInput.value || '').toLowerCase().trim();
+  const filtered = movies.filter(m=>{
+    if(!term) return true;
+    return (m.title && m.title.toLowerCase().includes(term)) ||
+           (m.genre && m.genre.toLowerCase().includes(term)) ||
+           (m.director && m.director.toLowerCase().includes(term));
+  });
+  if(filtered.length===0){
+    grid.innerHTML = `<div class="empty-state">No films found matching your search.</div>`;
+    updateCollectionText(); return;
+  }
+  filtered.forEach(movie=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.onclick = ()=> openEditModal(movie.id);
+    const stars = '★'.repeat(movie.rating||0) + '☆'.repeat(5-(movie.rating||0));
+    let imageSrc = '';
+    if(movie.posterUrl && movie.posterUrl.trim()!=='') imageSrc = movie.posterUrl;
+    else {
+      const fill = encodeURIComponent(movie.color || '#232a32');
+      const letter = encodeURIComponent((movie.title||'').substring(0,1) || '');
+      imageSrc = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='300' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' fill='${fill}'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='28' fill='rgba(255,255,255,0.9)'%3E${letter}%3C/text%3E%3C/svg%3E`;
+    }
+    card.innerHTML = `
+      <div class="poster-frame"><img src="${imageSrc}" alt="${escapeHtml(movie.title)}" class="poster"></div>
+      <div class="meta">
+        <div class="title-row"><span class="movie-title">${escapeHtml(movie.title)}</span></div>
+        <div class="year">${movie.year || (movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : '—')} • ${escapeHtml(movie.director||'Unknown')}</div>
+        <div class="rating-row"><span class="stars">${stars}</span></div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  updateCollectionText();
+}
+
+function escapeHtml(str){ if(!str && str!==0) return ''; return String(str).replace(/[&<>"]/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));}
+
+function openAddModal(){ modal.classList.add('active'); entryForm.reset(); document.querySelector('input[name="id"]').value=''; modalTitle.textContent='Log a New Film'; deleteBtn.style.display='none'; document.querySelector('input[name="title"]').focus(); }
+function openEditModal(id){
+  const movie = movies.find(m=>Number(m.id)===Number(id)); if(!movie) return;
+  currentEditId = Number(id);
+  modal.classList.add('active'); modalTitle.textContent='Edit Film Details'; deleteBtn.style.display='inline-flex';
+  const f = entryForm.elements;
+  f['id'].value = movie.id; f['title'].value = movie.title||''; f['director'].value = movie.director||''; f['writer'].value = movie.writer||''; f['releaseDate'].value = movie.releaseDate||''; f['genre'].value = movie.genre||''; f['posterUrl'].value = movie.posterUrl||''; f['rating'].value = movie.rating||3;
+}
+function closeModal(){ modal.classList.remove('active'); entryForm.reset(); currentEditId = null; deleteBtn.style.display='none'; }
+
+function handleSave(e){
+  e.preventDefault();
+  const fd = new FormData(entryForm);
+  const id = fd.get('id');
+  const entry = {
+    title: fd.get('title') || 'Untitled',
+    director: fd.get('director') || '',
+    writer: fd.get('writer') || '',
+    genre: fd.get('genre') || '',
+    releaseDate: fd.get('releaseDate') || '',
+    posterUrl: fd.get('posterUrl') || '',
+    rating: parseInt(fd.get('rating')) || 3,
+    year: fd.get('releaseDate') ? new Date(fd.get('releaseDate')).getFullYear() : (new Date()).getFullYear()
+  };
+  if(id){
+    const idx = movies.findIndex(m=>Number(m.id)===Number(id));
+    if(idx!==-1){ entry.id = Number(id); entry.color = movies[idx].color || randomColor(); movies[idx] = entry; }
+    else { entry.id = Date.now(); entry.color = randomColor(); movies.unshift(entry); }
+  } else { entry.id = Date.now(); entry.color = randomColor(); movies.unshift(entry); }
+  saveData(); renderMovies(); closeModal();
+}
+
+function randomColor(){ const colors=["#ef4444","#f97316","#f59e0b","#84cc16","#10b981","#06b6d4","#3b82f6","#6366f1","#8b5cf6","#d946ef","#f43f5e"]; return colors[Math.floor(Math.random()*colors.length)]; }
+
+function handleDelete(){ if(!currentEditId) return; if(!confirm('Permanently delete this film?')) return; movies = movies.filter(m=>Number(m.id)!==Number(currentEditId)); saveData(); renderMovies(); closeModal(); }
+
+searchInput.addEventListener('input', ()=> renderMovies());
+modal.addEventListener('click', (e)=> { if(e.target===modal) closeModal(); });
+
+/* ---------- Export / Import (same as previous) ---------- */
+function exportData(){
+  try {
+    const json = JSON.stringify(movies, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url;
+    a.download = `cineLog_export_${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  } catch(e){ console.error('Export failed', e); alert('Export failed'); }
+}
+function importData(event){
+  const file = event.target.files && event.target.files[0]; if(!file) return;
+  if(!confirm('Import will overwrite your current library. Continue?')) { event.target.value=''; return; }
+  const r = new FileReader();
+  r.onload = (e)=> {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if(!Array.isArray(parsed)) throw new Error('Invalid format');
+      movies = parsed.map(m => ({
+        id: m.id ?? Date.now(),
+        title: m.title ?? 'Untitled',
+        director: m.director ?? '',
+        writer: m.writer ?? '',
+        genre: m.genre ?? '',
+        releaseDate: m.releaseDate ?? '',
+        posterUrl: m.posterUrl ?? '',
+        rating: Number(m.rating) || 3,
+        year: m.year || (m.releaseDate ? new Date(m.releaseDate).getFullYear() : new Date().getFullYear()),
+        color: m.color || randomColor()
+      }));
+      saveData(); renderMovies(); alert('Import successful');
+    } catch(err){ console.error('Import error', err); alert('Import failed'); } finally { event.target.value=''; }
+  };
+  r.readAsText(file);
+}
+/* ------------------------------------------------------- */
+
+/* ---------- AI helpers (demo only unless apiKey configured) ---------- */
+const apiKey = '';
+async function callGemini(promptText){
+  if(!apiKey) return "AI key not configured for demo.";
+  try {
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+    });
+    if(!resp.ok) throw new Error('API failed');
+    const data = await resp.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+  } catch(err){ console.error('Gemini error', err); return "Couldn't reach AI"; }
+}
+async function generateRoast(){ openAiModal('Roasting...',''); const movieList = movies.map(m=>`${m.title} (${m.rating}/5, ${m.genre||'Unknown'})`).join(', '); const prompt = `Act as a snarky critic. Roast: ${movieList}`; const result = await callGemini(prompt); updateAiModal('Roast', result); }
+async function generateRecommendation(){ openAiModal('Suggesting...',''); const favs = movies.filter(m=>m.rating>=4).map(m=>m.title).join(', '); const prompt = `Favorites: ${favs}. Suggest ONE hidden gem.`; const result = await callGemini(prompt); updateAiModal('Recommendation', result); }
+function openAiModal(title, text){ aiModal.classList.add('active'); aiTitle.textContent = title; aiContent.innerHTML = `<div style="padding:8px">${escapeHtml(text)}</div>`; }
+function updateAiModal(title, text){ aiTitle.textContent = title; aiContent.innerHTML = `<div style="white-space:pre-wrap">${escapeHtml(text)}</div>`; }
+function closeAiModal(){ aiModal.classList.remove('active'); }
+aiModal.addEventListener('click',(e)=>{ if(e.target===aiModal) closeAiModal(); });
+/* ------------------------------------------------------- */
+
+/* ---------- Generate shareable single-file HTML ---------- */
+function generateShareableFile(){
+  try {
+    // We will take the current page's HTML and replace the initialMovies block with the current movies JSON.
+    // To keep things safe, create a copy of the page template below (a minimal template) and inject movies.
+    const embed = JSON.stringify(movies, null, 2);
+    const template = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>CineLog — Shared</title>
+<style>body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#14181c;color:#fff;padding:20px;} .movie{background:#232a32;padding:12px;border-radius:8px;margin:8px 0}</style></head><body>
+<h1>CineLog — Shared Copy</h1>
+<p>This file was generated with your embedded library.</p>
+<script>
+  // embedded movies
+  const initialMovies = __EMBED_MOVIES__;
+  function escapeHtml(s){ if(!s&&s!==0) return ''; return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const root = document.createElement('div');
+    initialMovies.forEach(m=>{
+      const d = document.createElement('div'); d.className='movie';
+      d.innerHTML = '<strong>'+escapeHtml(m.title)+'</strong> — '+escapeHtml(m.year || (m.releaseDate?new Date(m.releaseDate).getFullYear():'—'))+'<div style="color:#99aabb">'+escapeHtml(m.director||'Unknown')+'</div>';
+      root.appendChild(d);
+    });
+    document.body.appendChild(root);
+  });
+</script>
+</body></html>`;
+
+    const finalHtml = template.replace('__EMBED_MOVIES__', embed);
+    const blob = new Blob([finalHtml], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url;
+    a.download = `cinelog_shared_${new Date().toISOString().slice(0,10)}.html`;
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    alert('Shareable HTML file downloaded. Share that file and others will see your list as it was when you generated it.');
+  } catch(err){ console.error('Share generate error', err); alert('Could not generate shareable file. See console.'); }
+}
+/* ------------------------------------------------------- */
+
+renderMovies();
+updateCollectionText();
+</script>
+</body>
+</html>
