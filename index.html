@@ -32,11 +32,7 @@
       padding: 0;
     }
 
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 40px 24px;
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
 
     header{
       display:flex;
@@ -48,276 +44,84 @@
       border-bottom: 1px solid var(--border);
       padding-bottom: 20px;
     }
-    .title h1{
-        margin:0;
-        font-size:24px;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-    }
-    .title p{
-        margin:4px 0 0 0;
-        color:var(--muted);
-        font-size:14px;
-    }
+    .title h1{ margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em; }
+    .title p{ margin:4px 0 0 0; color:var(--muted); font-size:14px; }
 
     .controls{display:flex;gap:12px;align-items:center; flex-wrap: wrap;}
-
-    .search-wrapper {
-        position: relative;
-    }
+    .search-wrapper { position: relative; }
     .search{
-      background: #2c3440;
-      border:1px solid transparent;
-      padding:10px 14px;
-      border-radius: 20px;
-      color: #fff;
-      width:200px;
-      font-size: 14px;
-      outline:none;
-      transition: all .2s;
+      background: #2c3440; border:1px solid transparent; padding:10px 14px; border-radius:20px;
+      color:#fff; width:220px; font-size:14px; outline:none; transition: all .2s;
     }
-    .search:focus{
-        background: #fff;
-        color: #14181c;
-    }
-    .search::placeholder {
-        color: var(--muted);
-    }
+    .search:focus{ background:#fff; color:#14181c; }
+    .search::placeholder { color: var(--muted); }
 
-    .btn{
-      background: #456;
-      border:none;
-      color:#fff;
-      padding:10px 16px;
-      border-radius:4px;
-      cursor:pointer;
-      font-size:13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      transition: background 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .btn:hover { background: #567; }
+    .btn{ background:#456; border:none; color:#fff; padding:10px 16px; border-radius:4px; cursor:pointer;
+      font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;
+      transition:background .2s; display:inline-flex; align-items:center; gap:6px;}
+    .btn:hover{ background:#567; }
+    .btn.primary{ background:var(--accent); color:#14181c; }
+    .btn.primary:hover{ background:var(--accent-hover); }
+    .btn.danger{ background:transparent; color:var(--danger); border:1px solid rgba(255,95,95,0.3); }
+    .btn.danger:hover{ background:var(--danger); color:#fff; }
 
-    .btn.primary{
-      background: var(--accent);
-      color:#14181c;
-    }
-    .btn.primary:hover {
-        background: var(--accent-hover);
-    }
+    .btn.ai-roast { background: linear-gradient(135deg,#ff8000,#ff0055); color: white; }
+    .btn.ai-suggest { background: linear-gradient(135deg,#40bcf4,#00e054); color:#0b1220; }
 
-    .btn.danger{
-        background: transparent;
-        color: var(--danger);
-        border: 1px solid rgba(255, 95, 95, 0.3);
-    }
-    .btn.danger:hover{
-        background: var(--danger);
-        color: #fff;
-    }
+    .grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px 16px; align-items:start; }
 
-    .btn.ai-roast {
-        background: linear-gradient(135deg, #ff8000, #ff0055);
-        color: white;
-    }
-    .btn.ai-suggest {
-        background: linear-gradient(135deg, #40bcf4, #00e054);
-        color: #0b1220;
-    }
+    .card{ position: relative; border-radius: var(--radius); transition: transform 0.2s; cursor:pointer; }
+    .card:hover{ transform: translateY(-4px); }
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 24px 16px;
-      align-items:start;
-    }
+    .poster-frame { position: relative; border-radius: var(--radius); overflow:hidden; aspect-ratio:2/3;
+      box-shadow:0 2px 8px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1); background:#232a32; }
 
-    .card{
-      position: relative;
-      border-radius: var(--radius);
-      transition: transform 0.2s;
-      cursor: pointer;
-    }
-    .card:hover{
-        transform: translateY(-4px);
-    }
+    .poster-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); opacity:0; transition:opacity .2s;
+      display:flex; align-items:center; justify-content:center; backdrop-filter: blur(2px); }
+    .card:hover .poster-overlay { opacity:1; }
 
-    .poster-frame {
-        position: relative;
-        border-radius: var(--radius);
-        overflow: hidden;
-        aspect-ratio: 2 / 3;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        border: 1px solid rgba(255,255,255,0.1);
-        background: #232a32;
-    }
+    .poster{ width:100%; height:100%; object-fit:cover; display:block; }
 
-    .poster-overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.6);
-        opacity: 0;
-        transition: opacity 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(2px);
-    }
-    .card:hover .poster-overlay {
-        opacity: 1;
-    }
+    .meta{ padding-top:8px; }
+    .title-row{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:2px; line-height:1.3; }
+    .movie-title{ font-weight:600; font-size:15px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.8); }
+    .year{ color:var(--muted); font-size:13px; margin-top:2px; }
+    .rating-row{ display:flex; align-items:center; gap:6px; margin-top:6px; font-size:13px; color:var(--accent); }
+    .stars{ display:inline-flex; }
 
-    .poster{
-      width:100%;
-      height: 100%;
-      object-fit:cover;
-      display:block;
-    }
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter: blur(4px);
+      display:none; place-items:center; z-index:100; padding:20px; }
+    .modal-overlay.active { display:grid; }
+    .modal { background:#232a32; padding:24px; border-radius:8px; width:100%; max-width:540px; max-height:90vh;
+      overflow-y:auto; box-shadow:0 20px 50px rgba(0,0,0,0.5); border:1px solid var(--border); color:#d8e0e8; }
+    .modal h2{ margin-top:0; font-size:18px; margin-bottom:20px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:12px; }
 
-    .card-actions {
-        display: flex;
-        gap: 12px;
-        color: #fff;
-        font-weight: 600;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .form-full { grid-column:1 / -1; }
+    .form-group { margin-bottom:16px; }
+    .form-group label { display:block; font-size:12px; color:var(--muted); margin-bottom:6px; text-transform:uppercase; font-weight:600; }
+    .form-group input, .form-group select { width:100%; background:#14181c; border:1px solid #456; padding:10px; color:white; border-radius:4px; font-family:inherit; }
+    .form-group input:focus { border-color:var(--accent); outline:none; }
 
-    .meta{
-      padding-top: 8px;
-    }
-    .title-row{
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 2px;
-      line-height: 1.3;
-    }
-    .movie-title {
-        font-weight: 600;
-        font-size: 15px;
-        color: #fff;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-    }
-    .year {
-        color: var(--muted);
-        font-size: 13px;
-        margin-top: 2px;
-    }
-    .rating-row {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        margin-top: 6px;
-        font-size: 13px;
-        color: var(--accent);
-    }
-    .stars {
-        display: inline-flex;
-    }
+    .modal-actions { display:flex; justify-content:space-between; align-items:center; margin-top:24px; padding-top:16px; border-top:1px solid var(--border); }
+    .action-right{ display:flex; gap:10px; }
 
-    .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.8);
-        backdrop-filter: blur(4px);
-        display: none;
-        place-items: center;
-        z-index: 100;
-        padding: 20px;
-    }
-    .modal-overlay.active { display: grid; }
+    #aiContent{ line-height:1.6; font-size:15px; white-space:pre-wrap; }
+    .loading-spinner{ display:inline-block; width:20px; height:20px; border:2px solid rgba(255,255,255,0.3); border-radius:50%; border-top-color:#fff; animation:spin 1s linear infinite; margin-right:8px; }
+    @keyframes spin{ to { transform: rotate(360deg); } }
 
-    .modal {
-        background: #232a32;
-        padding: 24px;
-        border-radius: 8px;
-        width: 100%;
-        max-width: 500px;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        border: 1px solid var(--border);
-        color: #d8e0e8;
-    }
-    .modal h2 { margin-top: 0; font-size: 18px; margin-bottom: 20px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .empty-state { grid-column: 1 / -1; text-align:center; padding:60px; color:var(--muted); }
 
-    .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
+    @media (max-width:768px) {
+      header { flex-direction:column; align-items:stretch; gap:16px; }
+      .controls { flex-direction:column; align-items:stretch; }
+      .search { width:100%; }
+      .grid { grid-template-columns: repeat(3, 1fr); gap:10px; }
+      .title h1 { font-size:20px; }
+      .btn { justify-content:center; }
+      .form-grid { grid-template-columns:1fr; }
     }
-    .form-full {
-        grid-column: 1 / -1;
-    }
-
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; font-weight: 600; }
-    .form-group input, .form-group select {
-        width: 100%;
-        background: #14181c;
-        border: 1px solid #456;
-        padding: 10px;
-        color: white;
-        border-radius: 4px;
-        font-family: inherit;
-    }
-    .form-group input:focus { border-color: var(--accent); outline: none; }
-
-    .modal-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 24px;
-        padding-top: 16px;
-        border-top: 1px solid var(--border);
-    }
-    .action-right {
-        display: flex;
-        gap: 10px;
-    }
-
-    #aiContent {
-        line-height: 1.6;
-        font-size: 15px;
-        white-space: pre-wrap;
-    }
-    .loading-spinner {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border: 2px solid rgba(255,255,255,0.3);
-        border-radius: 50%;
-        border-top-color: #fff;
-        animation: spin 1s ease-in-out infinite;
-        margin-right: 8px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .empty-state {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 60px;
-        color: var(--muted);
-    }
-
-    @media (max-width: 768px) {
-        header { flex-direction: column; align-items: stretch; gap: 16px; }
-        .controls { flex-direction: column; align-items: stretch; }
-        .search { width: 100%; }
-        .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .title h1 { font-size: 20px; }
-        .btn { justify-content: center; }
-        .form-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 400px) {
-        .grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    @media (max-width:400px) { .grid { grid-template-columns: repeat(2, 1fr); } }
   </style>
 </head>
 <body>
@@ -326,250 +130,159 @@
   <header>
     <div class="title">
       <h1>CineLog</h1>
-      <p id="collectionMeta">A personal collection of 48 films</p>
+      <p id="collectionCount">A personal collection of 48 films</p>
     </div>
 
     <div class="controls">
       <div class="search-wrapper">
         <input type="text" id="searchInput" class="search" placeholder="Filter by name, genre..." />
       </div>
+
       <button class="btn ai-roast" onclick="generateRoast()">✨ Roast My Taste</button>
       <button class="btn ai-suggest" onclick="generateRecommendation()">✨ Suggest a Gem</button>
-
-      <!-- Show deleted toggle -->
-      <button id="toggleDeleted" class="btn" title="Show/Hide deleted films" onclick="toggleShowDeleted()">Show Deleted: Off</button>
 
       <button class="btn primary" onclick="openAddModal()">+ Log Film</button>
     </div>
   </header>
 
-  <main id="grid" class="grid">
-    <!-- Cards injected here -->
-  </main>
+  <main id="grid" class="grid"></main>
 </div>
 
 <!-- Edit/Add Movie Modal -->
 <div id="entryModal" class="modal-overlay">
-    <div class="modal">
-        <h2 id="modalTitle">Log a Film</h2>
-        <form id="entryForm" onsubmit="handleSave(event)">
-            <input type="hidden" name="id">
+  <div class="modal">
+    <h2 id="modalTitle">Log a Film</h2>
+    <form id="entryForm" onsubmit="handleSave(event)">
+      <input type="hidden" name="id">
+      <div class="form-grid">
+        <div class="form-group form-full">
+          <label>Film Title</label>
+          <input type="text" name="title" required placeholder="e.g. Parasite" autocomplete="off">
+        </div>
 
-            <div class="form-grid">
-                <div class="form-group form-full">
-                    <label>Film Title</label>
-                    <input type="text" name="title" required placeholder="e.g. Parasite" autocomplete="off">
-                </div>
+        <div class="form-group">
+          <label>Director</label>
+          <input type="text" name="director" placeholder="e.g. Bong Joon-ho">
+        </div>
 
-                <div class="form-group">
-                    <label>Director</label>
-                    <input type="text" name="director" placeholder="e.g. Bong Joon-ho">
-                </div>
+        <div class="form-group">
+          <label>Writer</label>
+          <input type="text" name="writer" placeholder="e.g. Bong Joon-ho">
+        </div>
 
-                <div class="form-group">
-                    <label>Writer</label>
-                    <input type="text" name="writer" placeholder="e.g. Bong Joon-ho">
-                </div>
+        <div class="form-group">
+          <label>Release Date</label>
+          <input type="date" name="releaseDate">
+        </div>
 
-                <div class="form-group">
-                    <label>Release Date</label>
-                    <input type="date" name="releaseDate">
-                </div>
+        <div class="form-group">
+          <label>Genre</label>
+          <input type="text" name="genre" placeholder="e.g. Thriller, Drama">
+        </div>
 
-                <div class="form-group">
-                    <label>Genre</label>
-                    <input type="text" name="genre" placeholder="e.g. Thriller, Drama">
-                </div>
+        <div class="form-group form-full">
+          <label>Poster Image URL</label>
+          <input type="url" name="posterUrl" placeholder="https://example.com/poster.jpg">
+        </div>
 
-                <div class="form-group form-full">
-                    <label>Poster Image URL</label>
-                    <input type="url" name="posterUrl" placeholder="https://example.com/poster.jpg">
-                </div>
+        <div class="form-group form-full">
+          <label>Rating</label>
+          <select name="rating">
+            <option value="5">★★★★★ - Masterpiece</option>
+            <option value="4">★★★★ - Great</option>
+            <option value="3">★★★ - Good</option>
+            <option value="2">★★ - Fair</option>
+            <option value="1">★ - Poor</option>
+          </select>
+        </div>
+      </div>
 
-                <div class="form-group form-full">
-                    <label>Rating</label>
-                    <select name="rating">
-                        <option value="5">★★★★★ - Masterpiece</option>
-                        <option value="4">★★★★ - Great</option>
-                        <option value="3">★★★ - Good</option>
-                        <option value="2">★★ - Fair</option>
-                        <option value="1">★ - Poor</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="modal-actions">
-                <!-- Delete / Restore buttons -->
-                <div>
-                  <button type="button" id="permanentDeleteBtn" class="btn danger" onclick="permanentlyDelete()" style="display:none;">Permanently Delete</button>
-                  <button type="button" id="softDeleteBtn" class="btn danger" onclick="handleDelete()" style="display:none;">Delete Film</button>
-                  <button type="button" id="restoreBtn" class="btn" onclick="restoreEntry()" style="display:none;">Restore</button>
-                </div>
-
-                <div class="action-right">
-                    <button type="button" class="btn" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="btn primary">Save Entry</button>
-                </div>
-            </div>
-        </form>
-    </div>
+      <div class="modal-actions">
+        <button type="button" id="deleteBtn" class="btn danger" onclick="handleDelete()" style="display:none;">Delete Film</button>
+        <div class="action-right">
+          <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn primary">Save Entry</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 <!-- AI Output Modal -->
 <div id="aiModal" class="modal-overlay">
-    <div class="modal">
-        <h2 id="aiTitle">Gemini Analysis</h2>
-        <div id="aiContent">Thinking...</div>
-        <div class="modal-actions">
-            <div></div>
-            <button type="button" class="btn" onclick="closeAiModal()">Close</button>
-        </div>
+  <div class="modal">
+    <h2 id="aiTitle">Gemini Analysis</h2>
+    <div id="aiContent">Thinking...</div>
+    <div class="modal-actions">
+      <div></div>
+      <button type="button" class="btn" onclick="closeAiModal()">Close</button>
     </div>
+  </div>
 </div>
 
 <script>
-  // API Key for Gemini (left blank)
+  // Put your Gemini API key here if you use the AI features; otherwise leave blank.
   const apiKey = "";
 
-  // Initial Mock Data
+  // Initial movies used only when localStorage is empty
   const initialMovies = [
-    { id: 1, title: "Blade Runner 2049", year: 2017, releaseDate: "2017-10-06", director: "Denis Villeneuve", writer: "Hampton Fancher", genre: "Sci-Fi", rating: 5, color: "#f97316", posterUrl: "", isDeleted: false },
-    { id: 2, title: "Dune: Part Two", year: 2024, releaseDate: "2024-03-01", director: "Denis Villeneuve", writer: "Denis Villeneuve", genre: "Sci-Fi", rating: 5, color: "#d97706", posterUrl: "", isDeleted: false },
-    { id: 3, title: "Interstellar", year: 2014, releaseDate: "2014-11-07", director: "Christopher Nolan", writer: "Jonathan Nolan", genre: "Sci-Fi", rating: 5, color: "#0ea5e9", posterUrl: "", isDeleted: false },
-    { id: 4, title: "The Grand Budapest Hotel", year: 2014, releaseDate: "2014-03-28", director: "Wes Anderson", writer: "Wes Anderson", genre: "Comedy", rating: 4, color: "#ec4899", posterUrl: "", isDeleted: false },
-    { id: 5, title: "Arrival", year: 2016, releaseDate: "2016-11-11", director: "Denis Villeneuve", writer: "Eric Heisserer", genre: "Sci-Fi", rating: 5, color: "#64748b", posterUrl: "", isDeleted: false },
-    { id: 6, title: "Whiplash", year: 2014, releaseDate: "2014-10-10", director: "Damien Chazelle", writer: "Damien Chazelle", genre: "Drama", rating: 5, color: "#eab308", posterUrl: "", isDeleted: false },
-    { id: 7, title: "La La Land", year: 2016, releaseDate: "2016-12-09", director: "Damien Chazelle", writer: "Damien Chazelle", genre: "Musical", rating: 4, color: "#6366f1", posterUrl: "", isDeleted: false },
-    { id: 8, title: "Everything Everywhere All At Once", year: 2022, releaseDate: "2022-03-25", director: "Daniels", writer: "Daniels", genre: "Action", rating: 5, color: "#8b5cf6", posterUrl: "", isDeleted: false },
-    { id: 9, title: "Her", year: 2013, releaseDate: "2013-12-18", director: "Spike Jonze", writer: "Spike Jonze", genre: "Romance", rating: 4, color: "#f43f5e", posterUrl: "", isDeleted: false },
-    { id: 10, title: "Parasite", year: 2019, releaseDate: "2019-11-08", director: "Bong Joon-ho", writer: "Bong Joon-ho", genre: "Thriller", rating: 5, color: "#10b981", posterUrl: "", isDeleted: false },
+    { id: 1, title: "Blade Runner 2049", year: 2017, releaseDate: "2017-10-06", director: "Denis Villeneuve", writer: "Hampton Fancher", genre: "Sci-Fi", rating: 5, color: "#f97316", posterUrl: "" },
+    { id: 2, title: "Dune: Part Two", year: 2024, releaseDate: "2024-03-01", director: "Denis Villeneuve", writer: "Denis Villeneuve", genre: "Sci-Fi", rating: 5, color: "#d97706", posterUrl: "" },
+    { id: 3, title: "Interstellar", year: 2014, releaseDate: "2014-11-07", director: "Christopher Nolan", writer: "Jonathan Nolan", genre: "Sci-Fi", rating: 5, color: "#0ea5e9", posterUrl: "" },
+    { id: 4, title: "The Grand Budapest Hotel", year: 2014, releaseDate: "2014-03-28", director: "Wes Anderson", writer: "Wes Anderson", genre: "Comedy", rating: 4, color: "#ec4899", posterUrl: "" },
+    { id: 5, title: "Arrival", year: 2016, releaseDate: "2016-11-11", director: "Denis Villeneuve", writer: "Eric Heisserer", genre: "Sci-Fi", rating: 5, color: "#64748b", posterUrl: "" },
+    { id: 6, title: "Whiplash", year: 2014, releaseDate: "2014-10-10", director: "Damien Chazelle", writer: "Damien Chazelle", genre: "Drama", rating: 5, color: "#eab308", posterUrl: "" },
+    { id: 7, title: "La La Land", year: 2016, releaseDate: "2016-12-09", director: "Damien Chazelle", writer: "Damien Chazelle", genre: "Musical", rating: 4, color: "#6366f1", posterUrl: "" },
+    { id: 8, title: "Everything Everywhere All At Once", year: 2022, releaseDate: "2022-03-25", director: "Daniels", writer: "Daniels", genre: "Action", rating: 5, color: "#8b5cf6", posterUrl: "" },
+    { id: 9, title: "Her", year: 2013, releaseDate: "2013-12-18", director: "Spike Jonze", writer: "Spike Jonze", genre: "Romance", rating: 4, color: "#f43f5e", posterUrl: "" },
+    { id: 10, title: "Parasite", year: 2019, releaseDate: "2019-11-08", director: "Bong Joon-ho", writer: "Bong Joon-ho", genre: "Thriller", rating: 5, color: "#10b981", posterUrl: "" },
   ];
 
-  // --- LOCAL STORAGE INIT ---
   const STORAGE_KEY = 'cineLog_movies_v1';
   let movies = [];
-  let showDeleted = false; // toggle
-
   try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-          movies = JSON.parse(stored);
-          // simple sanity: ensure all movies have isDeleted flag
-          movies = movies.map(m => ({ ...m, isDeleted: !!m.isDeleted }));
-      } else {
-          movies = [...initialMovies];
-      }
-  } catch (e) {
-      console.error("Storage error:", e);
-      movies = [...initialMovies];
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) movies = JSON.parse(stored);
+    else movies = [...initialMovies];
+  } catch (err) {
+    console.error('storage read error', err);
+    movies = [...initialMovies];
   }
 
-  function saveData() {
-      try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(movies));
-      } catch (e) {
-          console.error("Could not save to local storage", e);
-      }
-      updateCollectionMeta();
-  }
-
-  let currentEditId = null;
-
+  // DOM refs
   const grid = document.getElementById('grid');
   const searchInput = document.getElementById('searchInput');
   const modal = document.getElementById('entryModal');
   const entryForm = document.getElementById('entryForm');
   const modalTitle = document.getElementById('modalTitle');
-  const softDeleteBtn = document.getElementById('softDeleteBtn');
-  const permanentDeleteBtn = document.getElementById('permanentDeleteBtn');
-  const restoreBtn = document.getElementById('restoreBtn');
-  const toggleDeletedBtn = document.getElementById('toggleDeleted');
-  const collectionMeta = document.getElementById('collectionMeta');
-
+  const deleteBtn = document.getElementById('deleteBtn');
+  const collectionCount = document.getElementById('collectionCount');
   const aiModal = document.getElementById('aiModal');
   const aiContent = document.getElementById('aiContent');
   const aiTitle = document.getElementById('aiTitle');
 
-  // --- Gemini API Handler (unchanged) ---
-  async function callGemini(promptText) {
-      if (!apiKey) return "AI key not configured in this local demo.";
-      try {
-          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                  contents: [{ parts: [{ text: promptText }] }]
-              })
-          });
-          if (!response.ok) throw new Error('API call failed');
-          const data = await response.json();
-          return data.candidates[0].content.parts[0].text;
-      } catch (error) {
-          console.error("Gemini Error:", error);
-          return "Sorry, I couldn't reach the AI film critic right now. Please try again later.";
-      }
+  let currentDeleteId = null;
+
+  function saveData() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(movies));
+      updateCollectionText();
+    } catch (e) {
+      console.error('Could not save to localStorage', e);
+    }
   }
 
-  async function generateRoast() {
-      openAiModal("Roasting Your Taste...", "Analyzing your pretentious list of films...");
-      const movieList = movies.filter(m => !m.isDeleted).map(m => `${m.title} (${m.rating}/5 stars, ${m.genre})`).join(", ");
-      const prompt = `
-        Act as a snarky, pretentious film critic.
-        Roast my movie taste (funny, slightly mean but harmless). Keep under 150 words.
-        My Films: ${movieList}
-      `;
-      const result = await callGemini(prompt);
-      updateAiModal("The Verdict 🔥", result);
-  }
-
-  async function generateRecommendation() {
-      openAiModal("Finding a Gem...", "Sifting through the archives for something you'll love...");
-      const favorites = movies.filter(m => m.rating >= 4 && !m.isDeleted).map(m => m.title).join(", ");
-      const prompt = `
-        Here is a list of movies I love: ${favorites}.
-        Suggest exactly ONE "Hidden Gem" movie (not mainstream) that fits this vibe.
-        Format:
-        **Title:** [Movie Title] ([Year])
-        **Why:** [One sentence]
-      `;
-      const result = await callGemini(prompt);
-      updateAiModal("Recommended Watch ✨", result);
-  }
-
-  function openAiModal(title, initialText) {
-      aiModal.classList.add('active');
-      aiTitle.textContent = title;
-      aiContent.innerHTML = `<div class="loading-spinner"></div> ${initialText}`;
-  }
-
-  function updateAiModal(title, text) {
-      aiTitle.textContent = title;
-      const formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-      aiContent.innerHTML = formatted;
-  }
-
-  function closeAiModal() {
-      aiModal.classList.remove('active');
-  }
-  aiModal.addEventListener('click', (e) => { if (e.target === aiModal) closeAiModal(); });
-
-  // --- Render & Helpers ---
-  function updateCollectionMeta() {
-      const activeCount = movies.filter(m => !m.isDeleted).length;
-      const deletedCount = movies.filter(m => m.isDeleted).length;
-      collectionMeta.textContent = `A personal collection of ${activeCount} films${deletedCount ? ` — ${deletedCount} deleted` : ''}`;
+  function updateCollectionText() {
+    const activeCount = movies.length;
+    collectionCount.textContent = `A personal collection of ${activeCount} films`;
   }
 
   function renderMovies(list = movies) {
     grid.innerHTML = '';
-
-    const visible = list.filter(m => {
-      if (showDeleted) return true;
-      return !m.isDeleted;
-    });
-
     const term = (searchInput.value || '').toLowerCase().trim();
-    const filtered = visible.filter(m => {
+
+    // Filter by search term if present
+    const filtered = list.filter(m => {
       if (!term) return true;
       return (m.title && m.title.toLowerCase().includes(term)) ||
              (m.genre && m.genre.toLowerCase().includes(term)) ||
@@ -577,142 +290,128 @@
     });
 
     if (filtered.length === 0) {
-        grid.innerHTML = `<div class="empty-state">No films found matching your search.</div>`;
-        updateCollectionMeta();
-        return;
+      grid.innerHTML = `<div class="empty-state">No films found matching your search.</div>`;
+      updateCollectionText();
+      return;
     }
 
     filtered.forEach(movie => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.onclick = (e) => {
-          // If target is a control inside card (none for now) handle differently
-          openEditModal(movie.id);
-        };
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.onclick = () => openEditModal(movie.id);
 
-        const stars = '★'.repeat(movie.rating || 0) + '☆'.repeat(5 - (movie.rating || 0));
+      const stars = '★'.repeat(movie.rating || 0) + '☆'.repeat(5 - (movie.rating || 0));
 
-        let imageSrc;
-        if (movie.posterUrl && movie.posterUrl.trim() !== "") {
-            imageSrc = movie.posterUrl;
-        } else {
-             imageSrc = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='300' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' fill='${encodeURIComponent(movie.color || '#232a32')}'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='rgba(255,255,255,0.8)'%3E${encodeURIComponent((movie.title||'')[0] || '')}%3C/text%3E%3C/svg%3E`;
-        }
+      let imageSrc;
+      if (movie.posterUrl && movie.posterUrl.trim() !== '') {
+        imageSrc = movie.posterUrl;
+      } else {
+        const fill = encodeURIComponent(movie.color || '#232a32');
+        const letter = encodeURIComponent((movie.title || '').substring(0,1));
+        imageSrc = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='300' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' fill='${fill}'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='28' fill='rgba(255,255,255,0.9)'%3E${letter}%3C/text%3E%3C/svg%3E`;
+      }
 
-        // mark visual for deleted
-        const deletedBadge = movie.isDeleted ? `<div style="position:absolute;left:8px;top:8px;background:rgba(255,95,95,0.12);color:var(--danger);padding:4px 6px;border-radius:4px;font-size:12px;font-weight:700;">DELETED</div>` : '';
-
-        card.innerHTML = `
-            <div class="poster-frame" style="position:relative;">
-                ${deletedBadge}
-                <img src="${imageSrc}" alt="${(movie.title||'')}" class="poster" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x300?text=Error'">
-                <div class="poster-overlay">
-                    <div class="card-actions">
-                        Edit Entry
-                    </div>
-                </div>
-            </div>
-            <div class="meta">
-                <div class="title-row">
-                    <span class="movie-title">${movie.title || 'Untitled'}</span>
-                </div>
-                <div class="year">${movie.year || (movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : '—')} • ${movie.director || 'Unknown'}</div>
-                <div class="rating-row">
-                    <span class="stars">${stars}</span>
-                </div>
-            </div>
-        `;
-        grid.appendChild(card);
+      card.innerHTML = `
+        <div class="poster-frame">
+          <img src="${imageSrc}" alt="${escapeHtml(movie.title)}" class="poster" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x300?text=Error'">
+          <div class="poster-overlay">
+            <div class="card-actions">Edit Entry</div>
+          </div>
+        </div>
+        <div class="meta">
+          <div class="title-row"><span class="movie-title">${escapeHtml(movie.title)}</span></div>
+          <div class="year">${movie.year || (movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : '—')} • ${escapeHtml(movie.director || 'Unknown')}</div>
+          <div class="rating-row"><span class="stars">${stars}</span></div>
+        </div>
+      `;
+      grid.appendChild(card);
     });
 
-    updateCollectionMeta();
+    updateCollectionText();
   }
 
-  // --- Modal Logic (Add & Edit) ---
+  // Utilities
+  function escapeHtml(str) {
+    if (!str && str !== 0) return '';
+    return String(str).replace(/[&<>"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));
+  }
+
+  function randomColor() {
+    const colors = ["#ef4444","#f97316","#f59e0b","#84cc16","#10b981","#06b6d4","#3b82f6","#6366f1","#8b5cf6","#d946ef","#f43f5e"];
+    return colors[Math.floor(Math.random()*colors.length)];
+  }
+
+  // Modal logic
   function openAddModal() {
-      modal.classList.add('active');
-      entryForm.reset();
-      document.querySelector('input[name="id"]').value = "";
-      modalTitle.textContent = "Log a New Film";
-      softDeleteBtn.style.display = "none";
-      permanentDeleteBtn.style.display = "none";
-      restoreBtn.style.display = "none";
-      currentEditId = null;
-      document.querySelector('input[name="title"]').focus();
+    modal.classList.add('active');
+    entryForm.reset();
+    document.querySelector('input[name="id"]').value = '';
+    modalTitle.textContent = 'Log a New Film';
+    deleteBtn.style.display = 'none';
+    document.querySelector('input[name="title"]').focus();
   }
 
   function openEditModal(id) {
-      // coerce id
-      const movie = movies.find(m => Number(m.id) === Number(id));
-      if (!movie) return;
+    const movie = movies.find(m => Number(m.id) === Number(id));
+    if (!movie) return;
+    modal.classList.add('active');
+    modalTitle.textContent = 'Edit Film Details';
+    deleteBtn.style.display = 'inline-flex';
+    currentDeleteId = Number(id);
 
-      modal.classList.add('active');
-      modalTitle.textContent = "Edit Film Details";
-      currentEditId = Number(id);
-
-      // Populate
-      const f = entryForm.elements;
-      f['id'].value = movie.id;
-      f['title'].value = movie.title || "";
-      f['director'].value = movie.director || "";
-      f['writer'].value = movie.writer || "";
-      f['releaseDate'].value = movie.releaseDate || "";
-      f['genre'].value = movie.genre || "";
-      f['posterUrl'].value = movie.posterUrl || "";
-      f['rating'].value = movie.rating || 3;
-
-      if (movie.isDeleted) {
-        softDeleteBtn.style.display = "none";
-        permanentDeleteBtn.style.display = "inline-flex";
-        restoreBtn.style.display = "inline-flex";
-      } else {
-        softDeleteBtn.style.display = "inline-flex";
-        permanentDeleteBtn.style.display = "none";
-        restoreBtn.style.display = "none";
-      }
+    const f = entryForm.elements;
+    f['id'].value = movie.id;
+    f['title'].value = movie.title || '';
+    f['director'].value = movie.director || '';
+    f['writer'].value = movie.writer || '';
+    f['releaseDate'].value = movie.releaseDate || '';
+    f['genre'].value = movie.genre || '';
+    f['posterUrl'].value = movie.posterUrl || '';
+    f['rating'].value = movie.rating || 3;
   }
 
   function closeModal() {
-      modal.classList.remove('active');
-      entryForm.reset();
-      currentEditId = null;
+    modal.classList.remove('active');
+    entryForm.reset();
+    currentDeleteId = null;
+    deleteBtn.style.display = 'none';
   }
 
+  // Save (create or update)
   function handleSave(e) {
     e.preventDefault();
     const formData = new FormData(entryForm);
     const id = formData.get('id');
 
     const entryData = {
-        id: id ? Number(id) : Date.now(),
-        title: formData.get('title') || "Untitled",
-        director: formData.get('director') || "",
-        writer: formData.get('writer') || "",
-        genre: formData.get('genre') || "",
-        releaseDate: formData.get('releaseDate') || "",
-        posterUrl: formData.get('posterUrl') || "",
-        rating: parseInt(formData.get('rating')) || 3,
-        year: formData.get('releaseDate') ? new Date(formData.get('releaseDate')).getFullYear() : (new Date()).getFullYear(),
+      title: formData.get('title') || 'Untitled',
+      director: formData.get('director') || '',
+      writer: formData.get('writer') || '',
+      genre: formData.get('genre') || '',
+      releaseDate: formData.get('releaseDate') || '',
+      posterUrl: formData.get('posterUrl') || '',
+      rating: parseInt(formData.get('rating')) || 3,
+      year: formData.get('releaseDate') ? new Date(formData.get('releaseDate')).getFullYear() : (new Date()).getFullYear()
     };
 
     if (id) {
-        // UPDATE existing, preserve color and isDeleted flag if present
-        const index = movies.findIndex(m => Number(m.id) === Number(id));
-        if (index !== -1) {
-            entryData.color = movies[index].color || randomColor();
-            entryData.isDeleted = movies[index].isDeleted || false;
-            movies[index] = entryData;
-        } else {
-            // fallback: push
-            entryData.color = randomColor();
-            entryData.isDeleted = false;
-            movies.unshift(entryData);
-        }
-    } else {
-        // CREATE new
+      // update existing - preserve color and id
+      const index = movies.findIndex(m => Number(m.id) === Number(id));
+      if (index !== -1) {
+        entryData.id = Number(id);
+        entryData.color = movies[index].color || randomColor();
+        movies[index] = entryData;
+      } else {
+        // fallback - add new
+        entryData.id = Date.now();
         entryData.color = randomColor();
-        entryData.isDeleted = false;
         movies.unshift(entryData);
+      }
+    } else {
+      // create new
+      entryData.id = Date.now();
+      entryData.color = randomColor();
+      movies.unshift(entryData);
     }
 
     saveData();
@@ -720,65 +419,72 @@
     closeModal();
   }
 
-  function randomColor() {
-      const colors = ["#ef4444", "#f97316", "#f59e0b", "#84cc16", "#10b981", "#06b6d4", "#3b82f6", "#6366f1", "#8b5cf6", "#d946ef", "#f43f5e"];
-      return colors[Math.floor(Math.random() * colors.length)];
-  }
-
-  // Soft-delete: mark item as deleted (persisted)
+  // Delete (permanent)
   function handleDelete() {
-      if (!currentEditId) return;
-      if (!confirm("Are you sure you want to delete this film from your collection? This can be restored from the 'Show Deleted' view.")) return;
-      const idx = movies.findIndex(m => Number(m.id) === Number(currentEditId));
-      if (idx !== -1) {
-          movies[idx].isDeleted = true;
-          saveData();
-          renderMovies();
-          closeModal();
-      }
-  }
-
-  // Permanently remove from storage (visible only when viewing deleted)
-  function permanentlyDelete() {
-      if (!currentEditId) return;
-      if (!confirm("Permanently delete this film? This action cannot be undone.")) return;
-      movies = movies.filter(m => Number(m.id) !== Number(currentEditId));
-      saveData();
-      renderMovies();
-      closeModal();
-  }
-
-  function restoreEntry() {
-      if (!currentEditId) return;
-      const idx = movies.findIndex(m => Number(m.id) === Number(currentEditId));
-      if (idx !== -1) {
-          movies[idx].isDeleted = false;
-          saveData();
-          renderMovies();
-          closeModal();
-      }
-  }
-
-  function toggleShowDeleted() {
-      showDeleted = !showDeleted;
-      toggleDeletedBtn.textContent = `Show Deleted: ${showDeleted ? 'On' : 'Off'}`;
-      renderMovies();
+    if (!currentDeleteId) return;
+    if (!confirm('Are you sure you want to delete this film from your collection? This will be removed permanently.')) return;
+    movies = movies.filter(m => Number(m.id) !== Number(currentDeleteId));
+    saveData();
+    renderMovies();
+    closeModal();
   }
 
   // Search
-  searchInput.addEventListener('input', (e) => {
-    renderMovies();
-  });
+  searchInput.addEventListener('input', () => renderMovies());
 
   // Close modal on outside click
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+  // AI helpers (optional)
+  async function callGemini(promptText) {
+    if (!apiKey) return 'AI key not configured for demo.';
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+      });
+      if (!response.ok) throw new Error('API call failed');
+      const data = await response.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+    } catch (err) {
+      console.error('Gemini error', err);
+      return "Couldn't reach the AI right now.";
+    }
+  }
+
+  async function generateRoast() {
+    openAiModal('Roasting Your Taste...', 'Analyzing your list...');
+    const movieList = movies.map(m => `${m.title} (${m.rating}/5, ${m.genre || 'Unknown'})`).join(', ');
+    const prompt = `Act as a snarky film critic. Roast this list (keep it short, funny, slightly mean): ${movieList}`;
+    const result = await callGemini(prompt);
+    updateAiModal('The Verdict 🔥', result);
+  }
+
+  async function generateRecommendation() {
+    openAiModal('Finding a Gem...', 'Sifting through the archives...');
+    const favorites = movies.filter(m => m.rating >= 4).map(m => m.title).join(', ');
+    const prompt = `Based on these favorites: ${favorites}\nSuggest exactly ONE hidden gem movie (indie/international) and one short reason. Format:\n**Title:** Name (Year)\n**Why:** reason`;
+    const result = await callGemini(prompt);
+    updateAiModal('Recommended Watch ✨', result);
+  }
+
+  function openAiModal(title, initialText) {
+    aiModal.classList.add('active');
+    aiTitle.textContent = title;
+    aiContent.innerHTML = `<div class="loading-spinner"></div> ${escapeHtml(initialText)}`;
+  }
+  function updateAiModal(title, text) {
+    aiTitle.textContent = title;
+    const formatted = escapeHtml(text).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+    aiContent.innerHTML = formatted;
+  }
+  function closeAiModal() { aiModal.classList.remove('active'); }
   aiModal.addEventListener('click', (e) => { if (e.target === aiModal) closeAiModal(); });
 
-  // Initial Render
+  // Initial render
   renderMovies();
-  updateCollectionMeta();
+  updateCollectionText();
 </script>
 </body>
 </html>
