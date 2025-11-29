@@ -37,27 +37,27 @@
     header{
       display:flex;
       flex-wrap: wrap;
-      gap:20px;
+      gap:12px;
       align-items:flex-end;
       justify-content:space-between;
-      margin-bottom:32px;
+      margin-bottom:12px;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 20px;
+      padding-bottom: 12px;
     }
-    .title h1{ margin:0; font-size:24px; font-weight:700; letter-spacing:-0.02em; }
-    .title p{ margin:4px 0 0 0; color:var(--muted); font-size:14px; }
+    .title h1{ margin:0; font-size:20px; font-weight:700; letter-spacing:-0.02em; }
+    .title p{ margin:4px 0 0 0; color:var(--muted); font-size:13px; }
 
-    .controls{display:flex;gap:12px;align-items:center; flex-wrap: wrap;}
+    .controls{display:flex;gap:8px;align-items:center; flex-wrap: wrap;}
     .search-wrapper { position: relative; }
     .search{
-      background: #2c3440; border:1px solid transparent; padding:10px 14px; border-radius:20px;
-      color:#fff; width:220px; font-size:14px; outline:none; transition: all .2s;
+      background: #2c3440; border:1px solid transparent; padding:8px 12px; border-radius:20px;
+      color:#fff; width:200px; font-size:13px; outline:none; transition: all .2s;
     }
     .search:focus{ background:#fff; color:#14181c; }
     .search::placeholder { color: var(--muted); }
 
-    .btn{ background:#456; border:none; color:#fff; padding:10px 16px; border-radius:4px; cursor:pointer;
-      font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;
+    .btn{ background:#456; border:none; color:#fff; padding:8px 12px; border-radius:6px; cursor:pointer;
+      font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;
       transition:background .2s; display:inline-flex; align-items:center; gap:6px;}
     .btn:hover{ background:#567; }
     .btn.primary{ background:var(--accent); color:#14181c; }
@@ -68,13 +68,15 @@
     .btn.ai-roast { background: linear-gradient(135deg,#ff8000,#ff0055); color: white; }
     .btn.ai-suggest { background: linear-gradient(135deg,#40bcf4,#00e054); color:#0b1220; }
 
-    .grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px 16px; align-items:start; }
+    #miniNav { display:flex; gap:6px; align-items:center; margin-left:6px; }
+
+    .grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px 12px; align-items:start; }
 
     .card{ position: relative; border-radius: var(--radius); transition: transform 0.2s; cursor:pointer; background:var(--card); padding:8px; }
     .card:hover{ transform: translateY(-4px); }
 
     .poster-frame { position: relative; border-radius: var(--radius); overflow:hidden; aspect-ratio:2/3;
-      box-shadow:0 2px 8px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1); background:#232a32; }
+      box-shadow:0 2px 8px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.06); background:#232a32; }
 
     .poster-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); opacity:0; transition:opacity .2s;
       display:flex; align-items:center; justify-content:center; backdrop-filter: blur(2px); }
@@ -84,42 +86,44 @@
 
     .meta{ padding-top:8px; }
     .title-row{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:2px; line-height:1.3; }
-    .movie-title{ font-weight:600; font-size:15px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.8); }
-    .year{ color:var(--muted); font-size:13px; margin-top:2px; }
+    .movie-title{ font-weight:600; font-size:14px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.8); }
+    .year{ color:var(--muted); font-size:12px; margin-top:2px; }
     .rating-row{ display:flex; align-items:center; gap:6px; margin-top:6px; font-size:13px; color:var(--accent); }
     .stars{ display:inline-flex; }
 
     .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter: blur(4px);
       display:none; place-items:center; z-index:100; padding:20px; }
     .modal-overlay.active { display:grid; }
-    .modal { background:#232a32; padding:24px; border-radius:8px; width:100%; max-width:540px; max-height:90vh;
+    .modal { background:#232a32; padding:18px; border-radius:8px; width:100%; max-width:740px; max-height:90vh;
       overflow-y:auto; box-shadow:0 20px 50px rgba(0,0,0,0.5); border:1px solid var(--border); color:#d8e0e8; }
-    .modal h2{ margin-top:0; font-size:18px; margin-bottom:20px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:12px; }
+    .modal h2{ margin-top:0; font-size:18px; margin-bottom:12px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:12px; }
 
-    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
     .form-full { grid-column:1 / -1; }
-    .form-group { margin-bottom:16px; }
+    .form-group { margin-bottom:12px; }
     .form-group label { display:block; font-size:12px; color:var(--muted); margin-bottom:6px; text-transform:uppercase; font-weight:600; }
-    .form-group input, .form-group select { width:100%; background:#14181c; border:1px solid #456; padding:10px; color:white; border-radius:4px; font-family:inherit; }
+    .form-group input, .form-group select { width:100%; background:#14181c; border:1px solid #456; padding:8px; color:white; border-radius:6px; font-family:inherit; }
     .form-group input:focus { border-color:var(--accent); outline:none; }
 
-    .modal-actions { display:flex; justify-content:space-between; align-items:center; margin-top:24px; padding-top:16px; border-top:1px solid var(--border); }
-    .action-right{ display:flex; gap:10px; }
+    .modal-actions { display:flex; justify-content:space-between; align-items:center; margin-top:20px; padding-top:12px; border-top:1px solid var(--border); }
+    .action-right{ display:flex; gap:8px; }
 
     #aiContent{ line-height:1.6; font-size:15px; white-space:pre-wrap; }
-    .loading-spinner{ display:inline-block; width:20px; height:20px; border:2px solid rgba(255,255,255,0.3); border-radius:50%; border-top-color:#fff; animation:spin 1s linear infinite; margin-right:8px; }
+    .loading-spinner{ display:inline-block; width:18px; height:18px; border:2px solid rgba(255,255,255,0.3); border-radius:50%; border-top-color:#fff; animation:spin 1s linear infinite; margin-right:8px; }
     @keyframes spin{ to { transform: rotate(360deg); } }
 
     .empty-state { grid-column: 1 / -1; text-align:center; padding:60px; color:var(--muted); }
 
     .visually-hidden { position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
 
+    .tag-chip { background:rgba(255,255,255,0.04); padding:6px 10px; border-radius:16px; color:var(--muted); border:1px solid rgba(255,255,255,0.03); cursor:pointer; }
+
     @media (max-width:768px) {
-      header { flex-direction:column; align-items:stretch; gap:16px; }
+      header { flex-direction:column; align-items:stretch; gap:12px; }
       .controls { flex-direction:column; align-items:stretch; }
       .search { width:100%; }
       .grid { grid-template-columns: repeat(3, 1fr); gap:10px; }
-      .title h1 { font-size:20px; }
+      .title h1 { font-size:18px; }
       .btn { justify-content:center; }
       .form-grid { grid-template-columns:1fr; }
     }
@@ -130,14 +134,25 @@
 
 <div class="container">
   <header>
-    <div class="title">
-      <h1>CineLog</h1>
-      <p id="collectionCount">A personal collection of 0 films</p>
+    <div style="display:flex;flex-direction:column;">
+      <div class="title">
+        <h1>CineLog</h1>
+        <p id="collectionCount">A personal collection of 0 films</p>
+      </div>
+      <div id="miniNav" style="margin-top:8px;">
+        <!-- mini nav buttons injected in HTML for progressive enhancement -->
+        <button class="btn" data-route="#/">Gallery</button>
+        <button class="btn" data-route="#/map">Map</button>
+        <button class="btn" data-route="#/stats">Stats</button>
+        <button class="btn" data-route="#/compare">Compare</button>
+        <button class="btn" data-route="#/offline">Offline</button>
+        <button class="btn" data-route="#/settings">Settings</button>
+      </div>
     </div>
 
-    <div class="controls">
+    <div class="controls" aria-hidden="false">
       <div class="search-wrapper">
-        <input type="text" id="searchInput" class="search" placeholder="Filter by name, genre..." aria-label="Search films" />
+        <input type="text" id="searchInput" class="search" placeholder="Filter by name, genre or tag..." aria-label="Search films" />
       </div>
 
       <!-- Sort control -->
@@ -160,7 +175,10 @@
     </div>
   </header>
 
-  <main id="grid" class="grid" role="list"></main>
+  <!-- Page container: subpages will render here; gallery grid remains under it -->
+  <div id="pageContainer" style="padding:8px 0 20px 0"></div>
+
+  <main id="grid" class="grid" role="list" aria-live="polite"></main>
 </div>
 
 <!-- Edit/Add Movie Modal -->
@@ -200,7 +218,7 @@
           <input type="url" name="posterUrl" placeholder="https://example.com/poster.jpg">
         </div>
 
-        <div class="form-group form-full">
+        <div class="form-group">
           <label>Rating</label>
           <select name="rating">
             <option value="5">★★★★★ - Masterpiece</option>
@@ -210,6 +228,26 @@
             <option value="1">★ - Poor</option>
           </select>
         </div>
+
+        <!-- Mood tags input -->
+        <div class="form-group">
+          <label>Tags (comma separated)</label>
+          <input type="text" name="tags" placeholder="Mindfuck, Visual, Slow Burn">
+        </div>
+
+        <!-- Emotion meter (simple sliders) -->
+        <div class="form-group form-full">
+          <label>Emotion Meter (1-5)</label>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <div><label style="font-size:12px;color:var(--muted)">Emotional</label><input type="range" name="emo_emotional" min="1" max="5" value="3"></div>
+            <div><label style="font-size:12px;color:var(--muted)">Mind</label><input type="range" name="emo_mind" min="1" max="5" value="3"></div>
+            <div><label style="font-size:12px;color:var(--muted)">Visual</label><input type="range" name="emo_visual" min="1" max="5" value="3"></div>
+            <div><label style="font-size:12px;color:var(--muted)">Performance</label><input type="range" name="emo_performance" min="1" max="5" value="3"></div>
+            <div><label style="font-size:12px;color:var(--muted)">Pace</label><input type="range" name="emo_pace" min="1" max="5" value="3"></div>
+            <div><label style="font-size:12px;color:var(--muted)">Dark</label><input type="range" name="emo_dark" min="1" max="5" value="1"></div>
+          </div>
+        </div>
+
       </div>
 
       <div class="modal-actions">
@@ -237,33 +275,21 @@
 
 <script>
   // ---------- CONFIG ----------
-  // Remote JSON (raw file in your GitHub repo). I set this to your repo's raw URL.
-  // If you want the site to read a remote canonical list, set USE_REMOTE = true and ensure movies.json exists in your repo root.
- const USE_REMOTE = true;
-const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie-Collection/main/movies.json";
-
-  // Gemini API key (optional). Leave blank to use local fallback for AI features.
+  const USE_REMOTE = true;
+  const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie-Collection/main/movies.json";
   const apiKey = "";
 
-  // ---------- initial data (fallback if remote + local are missing) ----------
+  // ---------- initial data (fallback) ----------
   const initialMovies = [
     { id: 1, title: "Blade Runner 2049", year: 2017, releaseDate: "2017-10-06", director: "Denis Villeneuve", writer: "Hampton Fancher", genre: "Sci-Fi", rating: 5, color: "#f97316", posterUrl: "" },
-    { id: 2, title: "Dune: Part Two", year: 2024, releaseDate: "2024-03-01", director: "Denis Villeneuve", writer: "Denis Villeneuve", genre: "Sci-Fi", rating: 5, color: "#d97706", posterUrl: "" },
-    { id: 3, title: "Interstellar", year: 2014, releaseDate: "2014-11-07", director: "Christopher Nolan", writer: "Jonathan Nolan", genre: "Sci-Fi", rating: 5, color: "#0ea5e9", posterUrl: "" },
-    { id: 4, title: "The Grand Budapest Hotel", year: 2014, releaseDate: "2014-03-28", director: "Wes Anderson", writer: "Wes Anderson", genre: "Comedy", rating: 4, color: "#ec4899", posterUrl: "" },
-    { id: 5, title: "Arrival", year: 2016, releaseDate: "2016-11-11", director: "Denis Villeneuve", writer: "Eric Heisserer", genre: "Sci-Fi", rating: 5, color: "#64748b", posterUrl: "" },
-    { id: 6, title: "Whiplash", year: 2014, releaseDate: "2014-10-10", director: "Damien Chazelle", writer: "Damien Chazelle", genre: "Drama", rating: 5, color: "#eab308", posterUrl: "" },
-    { id: 7, title: "La La Land", year: 2016, releaseDate: "2016-12-09", director: "Damien Chazelle", writer: "Damien Chazelle", genre: "Musical", rating: 4, color: "#6366f1", posterUrl: "" },
-    { id: 8, title: "Everything Everywhere All At Once", year: 2022, releaseDate: "2022-03-25", director: "Daniels", writer: "Daniels", genre: "Action", rating: 5, color: "#8b5cf6", posterUrl: "" },
-    { id: 9, title: "Her", year: 2013, releaseDate: "2013-12-18", director: "Spike Jonze", writer: "Spike Jonze", genre: "Romance", rating: 4, color: "#f43f5e", posterUrl: "" },
-    { id: 10, title: "Parasite", year: 2019, releaseDate: "2019-11-08", director: "Bong Joon-ho", writer: "Bong Joon-ho", genre: "Thriller", rating: 5, color: "#10b981", posterUrl: "" },
+    { id: 2, title: "Dune: Part Two", year: 2024, releaseDate: "2024-03-01", director: "Denis Villeneuve", writer: "Denis Villeneuve", genre: "Sci-Fi", rating: 5, color: "#d97706", posterUrl: "" }
+    // (short fallback)
   ];
 
-  // ---------- storage keys & state ----------
+  // ---------- storage & refs ----------
   const STORAGE_KEY = 'cineLog_movies_v1';
   let movies = [];
 
-  // DOM refs
   const grid = document.getElementById('grid');
   const searchInput = document.getElementById('searchInput');
   const modal = document.getElementById('entryModal');
@@ -280,6 +306,8 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
   const btnExport = document.getElementById('btn-export');
   const btnImport = document.getElementById('btn-import');
   const btnCopy = document.getElementById('btn-copy');
+  const pageContainer = document.getElementById('pageContainer');
+  const miniNav = document.getElementById('miniNav');
 
   let currentDeleteId = null;
   let currentSort = sortSelect.value || 'desc';
@@ -289,12 +317,10 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
     if (!str && str !== 0) return '';
     return String(str).replace(/[&<>"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));
   }
-
   function randomColor() {
     const colors = ["#ef4444","#f97316","#f59e0b","#84cc16","#10b981","#06b6d4","#3b82f6","#6366f1","#8b5cf6","#d946ef","#f43f5e"];
     return colors[Math.floor(Math.random()*colors.length)];
   }
-
   function updateCollectionText() {
     collectionCount.textContent = `A personal collection of ${movies.length} films`;
   }
@@ -302,32 +328,30 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
   // ---------- persistence ----------
   function loadLocal() {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) return JSON.parse(stored);
-    } catch (err) { console.warn('local read failed', err); }
+      const s = localStorage.getItem(STORAGE_KEY);
+      if (s) return JSON.parse(s);
+    } catch (e) { console.warn('local read failed', e); }
     return null;
   }
-
   function saveLocal() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(movies));
       updateCollectionText();
-    } catch (e) { console.error('save local failed', e); }
+    } catch (e) { console.error('save failed', e); }
   }
 
-  // Fetch remote JSON (read-only in this client)
   async function fetchRemoteMovies() {
     if (!RAW_JSON_URL) throw new Error('RAW_JSON_URL not configured');
     const url = RAW_JSON_URL + '?t=' + Date.now();
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to fetch remote movies: ' + res.status);
+    const res = await fetch(url, { cache:'no-store' });
+    if (!res.ok) throw new Error('Failed to fetch: '+res.status);
     const data = await res.json();
     if (!Array.isArray(data)) throw new Error('Remote file is not an array');
     return data;
   }
 
-  // ---------- rendering & sorting ----------
-  function sortList(list, mode = 'desc') {
+  // ---------- rendering ----------
+  function sortList(list, mode='desc') {
     const copy = list.slice();
     copy.sort((a,b) => {
       const ra = Number(a.rating || 0);
@@ -341,12 +365,14 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
     grid.innerHTML = '';
     const term = (searchInput.value || '').toLowerCase().trim();
 
-    // Filter by search term if present
     const filtered = list.filter(m => {
       if (!term) return true;
-      return (m.title && m.title.toLowerCase().includes(term)) ||
-             (m.genre && m.genre.toLowerCase().includes(term)) ||
-             (m.director && m.director.toLowerCase().includes(term));
+      if ((m.title && m.title.toLowerCase().includes(term)) ||
+          (m.genre && m.genre.toLowerCase().includes(term)) ||
+          (m.director && m.director.toLowerCase().includes(term))) return true;
+      // tags search
+      if (m.tags && m.tags.some(t => t.toLowerCase().includes(term))) return true;
+      return false;
     });
 
     if (filtered.length === 0) {
@@ -355,10 +381,9 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
       return;
     }
 
-    // Apply sort
-    const finalList = sortList(filtered, currentSort);
+    const final = sortList(filtered, currentSort);
 
-    finalList.forEach(movie => {
+    final.forEach(movie => {
       const item = document.createElement('div');
       item.className = 'card';
       item.setAttribute('role','listitem');
@@ -367,15 +392,17 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
       item.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openEditModal(movie.id); } });
 
       const stars = '★'.repeat(movie.rating || 0) + '☆'.repeat(5 - (movie.rating || 0));
-
       let imageSrc;
-      if (movie.posterUrl && movie.posterUrl.trim() !== '') {
-        imageSrc = movie.posterUrl;
-      } else {
+      if (movie.posterUrl && movie.posterUrl.trim() !== '') imageSrc = movie.posterUrl;
+      else {
         const fill = encodeURIComponent(movie.color || '#232a32');
         const letter = encodeURIComponent((movie.title || '').substring(0,1));
         imageSrc = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='300' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' fill='${fill}'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='28' fill='rgba(255,255,255,0.9)'%3E${letter}%3C/text%3E%3C/svg%3E`;
       }
+
+      // emotion mini-display (small emoji row)
+      const em = movie.emotions || {};
+      const emotionHtml = `<div style="margin-top:8px;font-size:12px;color:var(--muted)">${Object.keys(em).length ? Object.entries(em).map(([k,v])=> (v? '●':'○') ).slice(0,3).join(' ') : ''}</div>`;
 
       item.innerHTML = `
         <div class="poster-frame">
@@ -388,6 +415,7 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
           <div class="title-row"><span class="movie-title">${escapeHtml(movie.title)}</span></div>
           <div class="year">${movie.year || (movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : '—')} • ${escapeHtml(movie.director || 'Unknown')}</div>
           <div class="rating-row"><span class="stars">${stars}</span></div>
+          ${movie.tags && movie.tags.length ? `<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${movie.tags.slice(0,3).map(t=>`<span class="tag-chip">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
         </div>
       `;
       grid.appendChild(item);
@@ -425,6 +453,13 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
     f['genre'].value = movie.genre || '';
     f['posterUrl'].value = movie.posterUrl || '';
     f['rating'].value = movie.rating || 3;
+    f['tags'].value = (movie.tags || []).join(', ');
+    // emotions
+    const em = movie.emotions || {};
+    ['emotional','mind','visual','performance','pace','dark'].forEach(k => {
+      const el = entryForm.querySelector(`[name="emo_${k}"]`);
+      if (el) el.value = em[k] ?? 3;
+    });
   }
 
   function closeModal() {
@@ -440,6 +475,16 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
     const formData = new FormData(entryForm);
     const id = formData.get('id');
 
+    const tagsRaw = (formData.get('tags') || '').split(',').map(s=>s.trim()).filter(Boolean);
+    const emotions = {
+      emotional: Number(formData.get('emo_emotional')||3),
+      mind: Number(formData.get('emo_mind')||3),
+      visual: Number(formData.get('emo_visual')||3),
+      performance: Number(formData.get('emo_performance')||3),
+      pace: Number(formData.get('emo_pace')||3),
+      dark: Number(formData.get('emo_dark')||1)
+    };
+
     const entryData = {
       title: formData.get('title') || 'Untitled',
       director: formData.get('director') || '',
@@ -448,6 +493,8 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
       releaseDate: formData.get('releaseDate') || '',
       posterUrl: formData.get('posterUrl') || '',
       rating: parseInt(formData.get('rating')) || 3,
+      tags: tagsRaw,
+      emotions,
       year: formData.get('releaseDate') ? new Date(formData.get('releaseDate')).getFullYear() : (new Date()).getFullYear()
     };
 
@@ -475,18 +522,17 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
 
   function handleDelete() {
     if (!currentDeleteId) return;
-    if (!confirm('Are you sure you want to delete this film from your collection? This will be removed permanently.')) return;
+    if (!confirm('Are you sure you want to delete this film from your collection?')) return;
     movies = movies.filter(m => Number(m.id) !== Number(currentDeleteId));
     saveLocal();
     renderMovies();
     closeModal();
   }
 
-  // Close modal on outside click
   modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
   aiModal.addEventListener('click', (e) => { if (e.target === aiModal) closeAiModal(); });
 
-  // ---------- AI helpers ----------
+  // ---------- AI helpers & fallbacks ----------
   async function callGemini(promptText) {
     if (!apiKey) return null;
     try {
@@ -504,7 +550,6 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
     }
   }
 
-  // Local fallback roast (used when no API key)
   function localRoast() {
     if (!movies.length) return "No movies to roast.";
     const avg = movies.reduce((s,m)=>s+(Number(m.rating)||0),0)/movies.length;
@@ -525,7 +570,6 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
     openAiModal('Roasting Your Taste...', 'Analyzing your list...');
     const movieList = movies.map(m => `${m.title} (${m.rating}/5, ${m.genre || 'Unknown'})`).join(', ');
     const prompt = `Act as a snarky film critic. Roast this list (short, funny, slightly mean): ${movieList}`;
-
     const remote = await callGemini(prompt);
     const result = remote || localRoast();
     updateAiModal('The Verdict 🔥', result);
@@ -535,7 +579,6 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
     openAiModal('Finding a Gem...', 'Sifting through the archives...');
     const favorites = movies.filter(m => m.rating >= 4).map(m => m.title).join(', ');
     const prompt = `Based on these favorites: ${favorites}\nSuggest exactly ONE hidden gem movie (indie/international) and one short reason. Format:\n**Title:** Name (Year)\n**Why:** reason`;
-
     const remote = await callGemini(prompt);
     const result = remote || localRecommend();
     updateAiModal('Recommended Watch ✨', result);
@@ -583,8 +626,7 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
     try {
       const parsed = JSON.parse(input);
       if (!Array.isArray(parsed)) throw new Error('JSON is not an array');
-      // normalize: ensure id and color
-      movies = parsed.map((m,i) => ({ id: m.id ?? (Date.now()+i), color: m.color ?? randomColor(), ...m }));
+      movies = parsed.map((m,i) => ({ id: m.id ?? (Date.now()+i), color: m.color ?? randomColor(), tags: m.tags || [], emotions: m.emotions || {}, ...m }));
       saveLocal();
       renderMovies();
       alert('Imported movies successfully.');
@@ -593,14 +635,183 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
     }
   }
 
-  // ---------- event wiring ----------
+  // ---------- mini-nav router & subpages ----------
+  miniNav.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-route]');
+    if (!btn) return;
+    location.hash = btn.getAttribute('data-route');
+  });
+
+  function updateActiveNav(route) {
+    document.querySelectorAll('#miniNav button').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-route') === route);
+    });
+  }
+
+  function renderGallery() {
+    pageContainer.innerHTML = '';
+    grid.style.display = '';
+    renderMovies();
+  }
+
+  function renderMap() {
+    grid.style.display = 'none';
+    pageContainer.innerHTML = `
+      <h2 style="margin-top:0">Film Universe Map</h2>
+      <p style="color:var(--muted)">Relationships between movies (by director, tags, year). Click any node to open details. (Placeholder)</p>
+      <div id="universeMap" style="height:520px;border:1px dashed rgba(255,255,255,0.06);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted)">
+        Map placeholder — we'll add a force-directed graph here.
+      </div>
+    `;
+    // later: lazy-load D3/vis and build nodes from movies
+  }
+
+  function renderStats() {
+    grid.style.display = 'none';
+    const counts = {};
+    movies.forEach(m => {
+      const y = (m.year || (m.releaseDate? new Date(m.releaseDate).getFullYear(): (new Date()).getFullYear()));
+      const decade = Math.floor(y/10)*10;
+      counts[decade] = (counts[decade]||0)+1;
+    });
+    const decades = Object.keys(counts).sort((a,b)=>a-b);
+    let bars = '';
+    const max = Math.max(...Object.values(counts),1);
+    decades.forEach(d => {
+      const w = Math.round((counts[d]/max)*100);
+      bars += `<div style="margin-bottom:10px;display:flex;align-items:center;gap:12px">
+        <div style="width:110px;color:var(--muted)">${d}s</div>
+        <div style="flex:1;background:linear-gradient(90deg,var(--accent),rgba(0,0,0,0.05));border-radius:6px;height:16px;overflow:hidden">
+          <div style="height:100%; width:${w}%; background:var(--accent)"></div>
+        </div>
+        <div style="width:36px;text-align:right">${counts[d]}</div>
+      </div>`;
+    });
+    pageContainer.innerHTML = `<h2 style="margin-top:0">Decade Stats</h2>
+      <p style="color:var(--muted)">Distribution of movies across decades</p>
+      <div style="max-width:900px">${bars}</div>
+      <hr style="margin:18px 0; border-color:var(--border)">
+      <div><button class="btn" id="exportStatsCSV">Export stats CSV</button></div>
+    `;
+    document.getElementById('exportStatsCSV').addEventListener('click', () => {
+      const rows = [['decade','count'], ...decades.map(d=>[d,counts[d]])];
+      const csv = rows.map(r=>r.join(',')).join('\n');
+      const blob = new Blob([csv], {type:'text/csv'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'decade-stats.csv'; a.click();
+    });
+  }
+
+  function renderCompare() {
+    grid.style.display = 'none';
+    const options = movies.map(m => `<option value="${m.id}">${escapeHtml(m.title)} (${m.year||''})</option>`).join('');
+    pageContainer.innerHTML = `
+      <h2 style="margin-top:0">Compare Two Movies</h2>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+        <select id="cmpA">${options}</select>
+        <select id="cmpB">${options}</select>
+        <button class="btn" id="doCompare">Compare</button>
+      </div>
+      <div id="compareResult" style="display:flex;gap:16px;flex-wrap:wrap"></div>
+    `;
+    document.getElementById('doCompare').addEventListener('click', () => {
+      const aId = Number(document.getElementById('cmpA').value);
+      const bId = Number(document.getElementById('cmpB').value);
+      if (aId === bId) return alert('Choose two different movies');
+      const a = movies.find(x=>x.id===aId);
+      const b = movies.find(x=>x.id===bId);
+      const html = (m)=>`
+        <div style="width:48%;background:var(--card);padding:12px;border-radius:8px">
+          <div style="font-weight:700">${escapeHtml(m.title)} <span style="color:var(--muted);font-weight:600">(${m.year||''})</span></div>
+          <div style="color:var(--muted);margin-top:6px">${escapeHtml(m.director||'Unknown')}</div>
+          <div style="margin-top:10px">Rating: ${m.rating||'—'}</div>
+          <div style="margin-top:8px;color:var(--muted)">Genre: ${escapeHtml(m.genre||'—')}</div>
+          <div style="margin-top:8px;color:var(--muted)">Tags: ${ (m.tags||[]).join(', ') || '—' }</div>
+        </div>`;
+      document.getElementById('compareResult').innerHTML = html(a)+html(b);
+    });
+  }
+
+  function renderOffline() {
+    grid.style.display = 'none';
+    pageContainer.innerHTML = `
+      <h2 style="margin-top:0">Offline & Backups</h2>
+      <p style="color:var(--muted)">Register service worker and export backups.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="registerSW">Register Service Worker</button>
+        <button class="btn" id="downloadBackup">Download Backup</button>
+        <button class="btn" id="uploadToRepo">Upload to GitHub (manual)</button>
+      </div>
+    `;
+    document.getElementById('downloadBackup').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(movies,null,2)], {type:'application/json'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'movies-backup.json'; a.click();
+    });
+    document.getElementById('registerSW').addEventListener('click', () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js').then(()=>alert('Service worker registered (if file exists).')).catch(e=>alert('Register failed: '+e.message));
+      } else alert('Service workers not supported in this browser.');
+    });
+    document.getElementById('uploadToRepo').addEventListener('click', ()=> {
+      alert('To upload: Add file → Create new file → name movies.json → paste backup → commit to main. I can guide you step-by-step.');
+    });
+  }
+
+  function renderSettings() {
+    grid.style.display = 'none';
+    pageContainer.innerHTML = `
+      <h2 style="margin-top:0">Settings — Mood Tags & Editor</h2>
+      <p style="color:var(--muted)">Create vibe tags, click to filter, and edit tags/emotions per movie via the Edit modal.</p>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+        <input id="newTag" placeholder="New mood tag e.g. Mindfuck" style="padding:8px;border-radius:6px;background:#14181c;border:1px solid #333;color:#fff">
+        <button class="btn" id="addTagBtn">Add Tag</button>
+        <div style="margin-left:8px;color:var(--muted)">Tip: open a movie and add tags in the Edit modal.</div>
+      </div>
+      <div id="tagList" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+    `;
+    const tlist = document.getElementById('tagList');
+    function refreshTags(){
+      const all = Array.from(new Set(movies.flatMap(m => m.tags || [])));
+      tlist.innerHTML = all.map(t=>`<button class="btn" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join('');
+      tlist.querySelectorAll('button').forEach(b => {
+        b.addEventListener('click', () => {
+          const tag = b.getAttribute('data-tag');
+          searchInput.value = tag; renderMovies();
+        });
+      });
+    }
+    document.getElementById('addTagBtn').addEventListener('click', () => {
+      const v = document.getElementById('newTag').value.trim();
+      if (!v) return alert('Enter a tag name');
+      // As an example, add to first movie if exists
+      if (movies[0]) {
+        movies[0].tags = Array.from(new Set([...(movies[0].tags||[]), v]));
+        saveLocal(); renderMovies(); refreshTags(); document.getElementById('newTag').value='';
+      } else alert('No movies in collection yet.');
+    });
+    refreshTags();
+  }
+
+  function router() {
+    let route = location.hash || '#/';
+    updateActiveNav(route);
+    switch (route) {
+      case '#/map': renderMap(); break;
+      case '#/stats': renderStats(); break;
+      case '#/compare': renderCompare(); break;
+      case '#/offline': renderOffline(); break;
+      case '#/settings': renderSettings(); break;
+      default: renderGallery(); break;
+    }
+  }
+  window.addEventListener('hashchange', router);
+
+  // ---------- wiring ----------
   searchInput.addEventListener('input', () => renderMovies());
   sortSelect.addEventListener('change', (e) => { currentSort = e.target.value; renderMovies(); });
   btnExport.addEventListener('click', exportJSON);
   btnImport.addEventListener('click', importJSONPrompt);
   btnCopy.addEventListener('click', copyJSONToClipboard);
 
-  // Accessible activation for AI buttons
   function makeButtonAccessible(btn, handler) {
     if (!btn) return;
     btn.setAttribute('tabindex','0');
@@ -613,7 +824,6 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
 
   // ---------- init load ----------
   async function init() {
-    // 1) Try localStorage
     const local = loadLocal();
     if (local && Array.isArray(local) && local.length) {
       movies = local;
@@ -621,27 +831,35 @@ const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie
       movies = initialMovies.slice();
     }
 
-    // 2) If configured, try to fetch remote and override (read-only)
     if (USE_REMOTE && RAW_JSON_URL) {
       try {
         const remote = await fetchRemoteMovies();
-        // Basic normalization: ensure id + color
-        movies = Array.isArray(remote) ? remote.map((m, i) => ({ id: m.id ?? (Date.now() + i), color: m.color ?? randomColor(), ...m })) : movies;
-        // Note: we do NOT auto-write remote from the browser — to push changes to repo, edit movies.json in GitHub or use a server-side flow.
+        movies = Array.isArray(remote) ? remote.map((m,i)=>({ id: m.id ?? (Date.now()+i), color: m.color ?? randomColor(), tags: m.tags || [], emotions: m.emotions || {}, ...m })) : movies;
       } catch (err) {
         console.warn('Could not fetch remote movies, using local data.', err);
       }
     }
 
-    // Save local copy (so edits persist in browser)
-    saveLocal();
+    // Ensure tags/emotions exist on all items
+    movies = movies.map(m => ({ tags: m.tags || [], emotions: m.emotions || {}, color: m.color || randomColor(), ...m }));
 
+    saveLocal();
     renderMovies();
     updateCollectionText();
+    router();
   }
 
-  // run
   init();
+
+  // ---------- service-worker skeleton (place file /service-worker.js in root to enable) ----------
+  /*
+  self.addEventListener('install', e => {
+    e.waitUntil(caches.open('cine-v1').then(c => c.addAll(['/','/index.html','/styles.css'])));
+  });
+  self.addEventListener('fetch', e => {
+    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+  });
+  */
 </script>
 </body>
 </html>
