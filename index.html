@@ -152,6 +152,11 @@
       <button id="btn-suggest" class="btn ai-suggest" aria-label="Suggest a gem" title="Suggest a gem (keyboard accessible)">✨ Suggest a Gem</button>
 
       <button class="btn primary" onclick="openAddModal()" aria-label="Log a film">+ Log Film</button>
+
+      <!-- Export / Import / Copy -->
+      <button id="btn-export" class="btn" title="Export JSON">Export</button>
+      <button id="btn-import" class="btn" title="Import JSON">Import</button>
+      <button id="btn-copy" class="btn" title="Copy JSON to clipboard">Copy</button>
     </div>
   </header>
 
@@ -232,16 +237,15 @@
 
 <script>
   // ---------- CONFIG ----------
-  // If you want to use a remote shared JSON file as the canonical source,
-  // set USE_REMOTE true and set RAW_JSON_URL to the raw.githubusercontent.com URL of your movies.json.
-  // Example: "https://raw.githubusercontent.com/yourusername/yourrepo/main/movies.json"
-  const USE_REMOTE = false; // <-- set to true to fetch remote list
-  const RAW_JSON_URL = "https://raw.githubusercontent.com/<username>/<repo>/<branch>/movies.json";
+  // Remote JSON (raw file in your GitHub repo). I set this to your repo's raw URL.
+  // If you want the site to read a remote canonical list, set USE_REMOTE = true and ensure movies.json exists in your repo root.
+  const USE_REMOTE = true; // set to true to prefer remote file (read-only from this client)
+  const RAW_JSON_URL = "https://raw.githubusercontent.com/shivangofficial/My-Movie-Collection/main/movies.json";
 
-  // Put your Gemini API key here if you want AI features to call Gemini. Leave blank to use local fallback.
+  // Gemini API key (optional). Leave blank to use local fallback for AI features.
   const apiKey = "";
 
-  // ---------- initial data ----------
+  // ---------- initial data (fallback if remote + local are missing) ----------
   const initialMovies = [
     { id: 1, title: "Blade Runner 2049", year: 2017, releaseDate: "2017-10-06", director: "Denis Villeneuve", writer: "Hampton Fancher", genre: "Sci-Fi", rating: 5, color: "#f97316", posterUrl: "" },
     { id: 2, title: "Dune: Part Two", year: 2024, releaseDate: "2024-03-01", director: "Denis Villeneuve", writer: "Denis Villeneuve", genre: "Sci-Fi", rating: 5, color: "#d97706", posterUrl: "" },
@@ -255,6 +259,7 @@
     { id: 10, title: "Parasite", year: 2019, releaseDate: "2019-11-08", director: "Bong Joon-ho", writer: "Bong Joon-ho", genre: "Thriller", rating: 5, color: "#10b981", posterUrl: "" },
   ];
 
+  // ---------- storage keys & state ----------
   const STORAGE_KEY = 'cineLog_movies_v1';
   let movies = [];
 
@@ -272,11 +277,14 @@
   const btnRoast = document.getElementById('btn-roast');
   const btnSuggest = document.getElementById('btn-suggest');
   const sortSelect = document.getElementById('sortSelect');
+  const btnExport = document.getElementById('btn-export');
+  const btnImport = document.getElementById('btn-import');
+  const btnCopy = document.getElementById('btn-copy');
 
   let currentDeleteId = null;
   let currentSort = sortSelect.value || 'desc';
 
-  // ---------- Helpers ----------
+  // ---------- helpers ----------
   function escapeHtml(str) {
     if (!str && str !== 0) return '';
     return String(str).replace(/[&<>"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));
@@ -291,7 +299,7 @@
     collectionCount.textContent = `A personal collection of ${movies.length} films`;
   }
 
-  // ---------- Persistence ----------
+  // ---------- persistence ----------
   function loadLocal() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -318,7 +326,7 @@
     return data;
   }
 
-  // ---------- Rendering & Sorting ----------
+  // ---------- rendering & sorting ----------
   function sortList(list, mode = 'desc') {
     const copy = list.slice();
     copy.sort((a,b) => {
@@ -388,7 +396,7 @@
     updateCollectionText();
   }
 
-  // ---------- Modal logic ----------
+  // ---------- modal logic ----------
   function openAddModal() {
     modal.classList.add('active');
     modal.setAttribute('aria-hidden','false');
@@ -507,7 +515,6 @@
 
   function localRecommend() {
     if (!movies.length) return "No films to recommend from.";
-    // pick a relatively high-rated but not star (<=4) to recommend as 'gem'
     const sorted = movies.slice().sort((a,b)=> (b.rating||0) - (a.rating||0));
     const candidate = sorted.find(m => (m.rating || 0) >= 4 && (m.rating || 0) < 5) || sorted[0];
     if (!candidate) return "Try watching something that scares you a little.";
@@ -547,14 +554,51 @@
   }
   function closeAiModal() { aiModal.classList.remove('active'); aiModal.setAttribute('aria-hidden','true'); }
 
-  // ---------- Event wiring ----------
-  searchInput.addEventListener('input', () => renderMovies());
+  // ---------- export / import / copy ----------
+  function exportJSON() {
+    const dataStr = JSON.stringify(movies, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'movies.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
 
-  // Sort control
-  sortSelect.addEventListener('change', (e) => {
-    currentSort = e.target.value;
-    renderMovies();
-  });
+  async function copyJSONToClipboard() {
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(movies, null, 2));
+      alert('Movies JSON copied to clipboard.');
+    } catch (err) {
+      alert('Copy failed — you can export the file instead.');
+    }
+  }
+
+  function importJSONPrompt() {
+    const input = prompt('Paste the movies JSON array here (overwrites current list). Make sure it is valid JSON. If you want to merge, export first and edit locally.');
+    if (!input) return;
+    try {
+      const parsed = JSON.parse(input);
+      if (!Array.isArray(parsed)) throw new Error('JSON is not an array');
+      // normalize: ensure id and color
+      movies = parsed.map((m,i) => ({ id: m.id ?? (Date.now()+i), color: m.color ?? randomColor(), ...m }));
+      saveLocal();
+      renderMovies();
+      alert('Imported movies successfully.');
+    } catch (err) {
+      alert('Invalid JSON: ' + err.message);
+    }
+  }
+
+  // ---------- event wiring ----------
+  searchInput.addEventListener('input', () => renderMovies());
+  sortSelect.addEventListener('change', (e) => { currentSort = e.target.value; renderMovies(); });
+  btnExport.addEventListener('click', exportJSON);
+  btnImport.addEventListener('click', importJSONPrompt);
+  btnCopy.addEventListener('click', copyJSONToClipboard);
 
   // Accessible activation for AI buttons
   function makeButtonAccessible(btn, handler) {
@@ -567,7 +611,7 @@
   makeButtonAccessible(btnRoast, generateRoast);
   makeButtonAccessible(btnSuggest, generateRecommendation);
 
-  // ---------- Init load ----------
+  // ---------- init load ----------
   async function init() {
     // 1) Try localStorage
     const local = loadLocal();
@@ -581,26 +625,22 @@
     if (USE_REMOTE && RAW_JSON_URL) {
       try {
         const remote = await fetchRemoteMovies();
-        // Basic merge: remote becomes canonical. If you want to merge local edits, implement merge logic here.
-        movies = Array.isArray(remote) ? remote.map((m, i) => {
-          // ensure id and color exist
-          return { id: m.id ?? (Date.now() + i), color: m.color ?? randomColor(), ...m };
-        }) : movies;
-        // Note: we do NOT auto-write remote from the browser — to push changes to repo, either edit movies.json in GitHub
-        // or implement server-side push using GitHub API with auth.
+        // Basic normalization: ensure id + color
+        movies = Array.isArray(remote) ? remote.map((m, i) => ({ id: m.id ?? (Date.now() + i), color: m.color ?? randomColor(), ...m })) : movies;
+        // Note: we do NOT auto-write remote from the browser — to push changes to repo, edit movies.json in GitHub or use a server-side flow.
       } catch (err) {
         console.warn('Could not fetch remote movies, using local data.', err);
       }
     }
 
-    // Save local copy (so edits persist)
+    // Save local copy (so edits persist in browser)
     saveLocal();
 
     renderMovies();
     updateCollectionText();
   }
 
-  // initial call
+  // run
   init();
 </script>
 </body>
